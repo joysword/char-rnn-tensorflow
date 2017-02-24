@@ -1,6 +1,6 @@
 import tensorflow as tf
-from tensorflow.contrib import rnn
-from tensorflow.contrib import legacy_seq2seq
+from tensorflow.python.ops import rnn_cell
+from tensorflow.python.ops import seq2seq
 
 import numpy as np
 
@@ -12,17 +12,17 @@ class Model():
             args.seq_length = 1
 
         if args.model == 'rnn':
-            cell_fn = rnn.BasicRNNCell
+            cell_fn = rnn_cell.BasicRNNCell
         elif args.model == 'gru':
-            cell_fn = rnn.GRUCell
+            cell_fn = rnn_cell.GRUCell
         elif args.model == 'lstm':
-            cell_fn = rnn.BasicLSTMCell
+            cell_fn = rnn_cell.BasicLSTMCell
         else:
             raise Exception("model type not supported: {}".format(args.model))
 
         cell = cell_fn(args.rnn_size, state_is_tuple=True)
 
-        self.cell = cell = rnn.MultiRNNCell([cell] * args.num_layers, state_is_tuple=True)
+        self.cell = cell = rnn_cell.MultiRNNCell([cell] * args.num_layers, state_is_tuple=True)
 
         self.input_data = tf.placeholder(tf.int32, [args.batch_size, args.seq_length])
         self.targets = tf.placeholder(tf.int32, [args.batch_size, args.seq_length])
@@ -41,11 +41,11 @@ class Model():
             prev_symbol = tf.stop_gradient(tf.argmax(prev, 1))
             return tf.nn.embedding_lookup(embedding, prev_symbol)
 
-        outputs, last_state = legacy_seq2seq.rnn_decoder(inputs, self.initial_state, cell, loop_function=loop if infer else None, scope='rnnlm')
+        outputs, last_state = seq2seq.rnn_decoder(inputs, self.initial_state, cell, loop_function=loop if infer else None, scope='rnnlm')
         output = tf.reshape(tf.concat(outputs, 1), [-1, args.rnn_size])
         self.logits = tf.matmul(output, softmax_w) + softmax_b
         self.probs = tf.nn.softmax(self.logits)
-        loss = legacy_seq2seq.sequence_loss_by_example([self.logits],
+        loss = seq2seq.sequence_loss_by_example([self.logits],
                 [tf.reshape(self.targets, [-1])],
                 [tf.ones([args.batch_size * args.seq_length])],
                 args.vocab_size)
