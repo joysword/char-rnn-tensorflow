@@ -15,26 +15,48 @@ class TextLoader():
         vocab_file = os.path.join(data_dir, "vocab.pkl")
         tensor_file = os.path.join(data_dir, "data.npy")
 
+        # if vocab file and tensor file exist, load from previous preprocess
+        # otherwise do preprocess
         if not (os.path.exists(vocab_file) and os.path.exists(tensor_file)):
             print("reading text file")
             self.preprocess(input_file, vocab_file, tensor_file)
         else:
             print("loading preprocessed files")
             self.load_preprocessed(vocab_file, tensor_file)
+
         self.create_batches()
         self.reset_batch_pointer()
 
     def preprocess(self, input_file, vocab_file, tensor_file):
+
+        # read training set
         with codecs.open(input_file, "r", encoding=self.encoding) as f:
             data = f.read()
+
+        # count characters
         counter = collections.Counter(data)
+
+        # sort characters by number of appearance
+        # from most frequent to least
         count_pairs = sorted(counter.items(), key=lambda x: -x[1])
+
+        # get a lit of all characters, sorted
         self.chars, _ = zip(*count_pairs)
+
+        # get size of vocab
         self.vocab_size = len(self.chars)
+
+        # get indexed vocab
         self.vocab = dict(zip(self.chars, range(len(self.chars))))
+
+        # dump characters to vocab_file
         with open(vocab_file, 'wb') as f:
             cPickle.dump(self.chars, f)
+
+        # get tensor by converting each character in training set to index of each character
         self.tensor = np.array(list(map(self.vocab.get, data)))
+
+        # save tensor
         np.save(tensor_file, self.tensor)
 
     def load_preprocessed(self, vocab_file, tensor_file):
@@ -52,13 +74,21 @@ class TextLoader():
 
         # When the data (tensor) is too small, let's give them a better error message
         if self.num_batches==0:
-            assert False, "Not enough data. Make seq_length and batch_size small."
+            assert False, "No enough data. Make seq_length and batch_size smaller."
 
+        # get rid of the leftover at the end of the tensor
         self.tensor = self.tensor[:self.num_batches * self.batch_size * self.seq_length]
+
+        # set xdata and ydata
+        # ydata = [xdata[1:], xdata[0]]
         xdata = self.tensor
         ydata = np.copy(self.tensor)
         ydata[:-1] = xdata[1:]
         ydata[-1] = xdata[0]
+
+        # get x_batches and y_batches by making xdata and ydata into num_batches batch_size by seq_length matrices
+        # for example, if num_batches = 100, batch_size = 50 and seq_length = 50,
+        # each of x_batches and y_batches consists of 100 50*50 matrices
         self.x_batches = np.split(xdata.reshape(self.batch_size, -1), self.num_batches, 1)
         self.y_batches = np.split(ydata.reshape(self.batch_size, -1), self.num_batches, 1)
 
