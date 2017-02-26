@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from __future__ import print_function
 import numpy as np
 import tensorflow as tf
@@ -14,11 +16,11 @@ from six import text_type
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--save_dir', type=str, default='save',
+    parser.add_argument('--save_dir', type=str, default='save1',
                        help='model directory to store checkpointed models')
     parser.add_argument('-n', type=int, default=500,
                        help='number of characters to sample')
-    parser.add_argument('--prime', type=text_type, default=u' ',
+    parser.add_argument('--prime', type=text_type, default=u'古',
                        help='prime text')
     parser.add_argument('--sample', type=int, default=1,
                        help='0 to use max at each timestep, 1 to sample at each timestep, 2 to sample on spaces')
