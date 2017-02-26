@@ -1,5 +1,8 @@
+# -*- coding: UTF-8 -*-
+
 import codecs
 import os
+import io
 import collections
 from six.moves import cPickle
 import numpy as np
@@ -30,11 +33,33 @@ class TextLoader():
     def preprocess(self, input_file, vocab_file, tensor_file):
 
         # read training set
-        with codecs.open(input_file, "r", encoding=self.encoding) as f:
-            data = f.read()
+        poetries = []
+
+        with io.open(input_file, "r", encoding=self.encoding) as f:
+            for line in f:
+                try:
+                    title, content = line.strip().split(':')
+                    content = content.replace(' ', '')
+                    if '_' in content or '(' in content or u'（' in content or u'《' in content or '[' in content:
+                        continue
+                    if len(content) < 5:# or len(content) > 79:
+                        continue
+                    content = '[' + content + ']'
+                    poetries.append(content)
+                except Exception as e:
+                    pass
+
+        # sort by number of characters in each poem
+        poetries = sorted(poetries, key = lambda line: len(line))
+        print 'number of poems: ', len(poetries)
+
+        # get all characters
+        all_chars = []
+        for poetry in poetries:
+            all_chars += [word for word in poetry]
 
         # count characters
-        counter = collections.Counter(data)
+        counter = collections.Counter(all_chars)
 
         # sort characters by number of appearance
         # from most frequent to least
@@ -42,6 +67,9 @@ class TextLoader():
 
         # get a lit of all characters, sorted
         self.chars, _ = zip(*count_pairs)
+
+        # take the frequent words
+        self.chars = self.chars[:len(self.chars)] + (' ',)
 
         # get size of vocab
         self.vocab_size = len(self.chars)
@@ -54,7 +82,7 @@ class TextLoader():
             cPickle.dump(self.chars, f)
 
         # get tensor by converting each character in training set to index of each character
-        self.tensor = np.array(list(map(self.vocab.get, data)))
+        self.tensor = np.array(list(map(self.vocab.get, all_chars)))
 
         # save tensor
         np.save(tensor_file, self.tensor)

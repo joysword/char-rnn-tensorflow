@@ -14,7 +14,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_dir', type=str, default='data/tangpoetry',
                        help='data directory containing input.txt')
-    parser.add_argument('--save_dir', type=str, default='save',
+    parser.add_argument('--save_dir', type=str, default='save1',
                        help='directory to store checkpointed models')
     parser.add_argument('--rnn_size', type=int, default=128,
                        help='size of RNN hidden state')
@@ -22,7 +22,7 @@ def main():
                        help='number of layers in the RNN')
     parser.add_argument('--model', type=str, default='lstm',
                        help='rnn, gru, or lstm')
-    parser.add_argument('--batch_size', type=int, default=50,
+    parser.add_argument('--batch_size', type=int, default=64,
                        help='minibatch size')
     parser.add_argument('--seq_length', type=int, default=50,
                        help='RNN sequence length')
