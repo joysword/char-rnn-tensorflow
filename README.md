@@ -1,4 +1,6 @@
 # Generate Chinese poetry with char-rnn
+![Alt text](screenshots/main_page.png?raw=true "Interface")
+![Alt text](screenshots/sample.png?raw=true "Generated poems")
 
 # char-rnn-tensorflow
 Multi-layer Recurrent Neural Networks (LSTM, RNN) for character-level language models in Python using Tensorflow.
@@ -20,10 +22,6 @@ To sample from a checkpointed model, `python sample.py --save_dir '/path/to/chec
 - Run `python rnn_tang_poetry.py` to go to the interface 
 - Open in browser http://127.0.0.1:5000/ 
 - Enjoy 
-
-# Screenshots 
-![Alt text](screenshots/main_page.png?raw=true "Interface")
-![Alt text](screenshots/sample.png?raw=true "Generated poems")
 
 # Explanation 
 - Corpus 
