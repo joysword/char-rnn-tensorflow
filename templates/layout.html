@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="an RNN Chinese Tang Poetry Generator">
+        <meta name="author" content="Shi Yin">
+
+        <title>RNN Tang Poetry Generator</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:600">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+        <script type='text/javascript'>
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
+    </head>
+
+    <body>
+        <!-- Navigation bar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">&nbsp;RNN Chinese Tang Poetry Generator</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    {% block navbar %}{% endblock %}
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <!-- end of Navigation bar -->
+
+        <!-- main -->
+        <div class="container">
+            {% block main %}{% endblock %}
+        </div>
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/fileinput.min.js') }}"></script>
+
+        <!-- moment.js, spin.js, etc -->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
+        <script src="{{ url_for('static', filename='js/jquery.spin.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jenks.js') }}"></script>-->
+
+        <!-- underscore.js -->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>-->
+
+        <!-- D3 JavaScript -->
+        <!--<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
+
+        <!--<script src="https://code.highcharts.com"></script>-->
+
+        <!-- D3 TopoJson JavaScript -->
+        <!--<script src="{{ url_for('static', filename='js/topojson.js') }}"></script>-->
+
+        <!-- Awesome Overlays JavaScript -->
+        <!--<script src="{{ url_for('static', filename='js/overlay.js') }}"></script>-->
+
+        {% block js %}{% endblock %}
+    </body>
+</html>

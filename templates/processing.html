@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block navbar %}
+<ul class="nav navbar-nav navbar-right">
+    <li class=""><a href="#">About</a></li>
+</ul>
+{% endblock %}
+
+{% block main %}
+<div class="row"><div class="col-md-3"></div>
+        <div class="col-md-6" align="center">
+            <div>
+                <br><br>
+                <br>
+                <p style="font-size:24px">System is generating Tang Poems for you... Please wait...</p>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+        </div>
+{% endblock %}
+
+{% block js %}
+<script>
+    function ajaxCallback(data) {
+        if (data.done) {
+            window.location.replace('{{ url_for('show_result', id=id) }}');
+        }
+        else {
+            window.setTimeout(function() {
+                $.getJSON('{{ url_for('get_result') }}', {id: '{{ id }}' }, ajaxCallback);
+            }, 1000);
+        }
+    }
+    $(document).ready(function(){
+        ajaxCallback({done: false});
+    });
+</script>
+{% endblock %}

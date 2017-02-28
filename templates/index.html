@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block navbar %}
+
+<ul class="nav navbar-nav navbar-right">
+    <li class=""><a href="#">About</a></li>
+</ul>
+{% endblock %}
+
+{% block main %}
+    <h1>Welcome to RNN Chinese Tang Poetry Generator</h1>
+    <h6>developed by Shiwangi Singh and Shi Yin</h6>
+    <div>
+    <p>Our model is trained by Upload your favorite photo and assign a famous style to it!</p>
+
+    <form method=post enctype=multipart/form-data>
+        <!-- <div class="row"><div class="col-md-12">
+            <label for="selectStyle">Select a Style</label>
+            <div class="radio">
+                {% for img in styles %}
+                <div class="col-md-2">
+                    <label>
+                        <input type="radio" name="style" value={{ img }}>
+                        <img src=" {{ url_for('static', filename='style/'+img) }} " width="150px" />{{ img.split('.')[0] }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div></div> -->
+
+        <div class="row"><div class="col-md-6">
+        <label>Specify how many poems do you want to generate
+            <div><input id="num" type="number" name="num" min="1" value="5"></input></div>
+        </label>
+        </div>
+
+        <div class="row"><div class="col-md-3"></div>
+        <div class="col-md-6" align="center">
+            <div class="">
+                <br><br>
+                <input type="submit" class="btn btn-primary" value="Start Generation"></input>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+        </div>
+    </form>
+{% endblock %}
