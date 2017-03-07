@@ -22,9 +22,11 @@
 <script>
     function ajaxCallback(data) {
         if (data.done) {
+            console.log('done');
             window.location.replace('{{ url_for('show_result', id=id) }}');
         }
         else {
+            console.log('not ready');
             window.setTimeout(function() {
                 $.getJSON('{{ url_for('get_result') }}', {id: '{{ id }}' }, ajaxCallback);
             }, 1000);
