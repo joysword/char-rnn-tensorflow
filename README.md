@@ -40,8 +40,3 @@ To sample from a checkpointed model, `python sample.py --save_dir '/path/to/chec
   1. Take the relations between characters into consideration;
   2. Take the tones of each character into consideration.
 - These considerations are because the rules for writing authentic Tang poetry has some restriction on the tones of the last character in   some segments in a poem, and has some requirements for the relations of objects in two consecutive segments.
-
-# Roadmap
-- Add explanatory comments
-- Expose more command-line arguments
-- Compare accuracy and performance with char-rnn
