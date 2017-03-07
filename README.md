@@ -8,6 +8,9 @@ Multi-layer Recurrent Neural Networks (LSTM, RNN) for character-level language m
 Inspired from Andrej Karpathy's [char-rnn](https://github.com/karpathy/char-rnn).
 Forked from Sherjil Ozair's [char-rnn-tensorflow](https://github.com/sherjilozair/char-rnn-tensorflow). 
 
+# (New) Live Demo!
+http://app.joysword.com/rnn_tang_poetry
+
 # Requirements
 - [Tensorflow 1.0](http://www.tensorflow.org)
 - [Flask](http://flask.pocoo.org/)
