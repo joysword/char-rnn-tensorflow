@@ -9,7 +9,7 @@ Inspired from Andrej Karpathy's [char-rnn](https://github.com/karpathy/char-rnn)
 Forked from Sherjil Ozair's [char-rnn-tensorflow](https://github.com/sherjilozair/char-rnn-tensorflow). 
 
 # (New) Live Demo!
-http://sage2rtt.evl.uic.edu:8080/rnn_tang_poetry
+http://sage2rtt.evl.uic.edu:8080/
 
 # (New) Video Demo!
 https://youtu.be/91lA5g6MF8s
